@@ -43,12 +43,31 @@ export class Febpop {
     }
   }
 
-  emit = (event: string) => (argument: any) => {
+  emit = (event: string, timeout: number | null = 10000) => (argument: any, onTimeOut?: () => void) => {
     const socket = this.delegate
 
-    const emission = () => socket.emit(event, argument, () => this.emissionBuffer.delete(emission))
+    const callbacks = new Array<(success: boolean) => void>(() => callbacks.length = 0)
+    const callbackFunction = (success: boolean) => callbacks.slice().forEach(f => f(success))
+
+    const emission = () => socket.emit(event, argument, () => callbackFunction(true))
+    callbacks.push(() => this.emissionBuffer.delete(emission))
     this.emissionBuffer.add(emission)
 
+    if (timeout !== null) {
+      const timer = setTimeout(
+        () => {
+          onTimeOut!()
+          callbackFunction(false)
+        },
+        timeout
+      )
+
+      callbacks.push(success => {
+        if (success) {
+          clearTimeout(timer)
+        }
+      })
+    }
     if (socket.connected) {
       emission()
     }
