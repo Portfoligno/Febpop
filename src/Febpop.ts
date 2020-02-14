@@ -11,7 +11,7 @@ const defaultOptions = {
 export class Febpop {
   private readonly pendingListeners = new Array<(socket: Socket) => void>()
   private readonly emissionBuffer = new Set<() => void>()
-  private socket?: Socket
+  private socket: Socket | null = null
 
   constructor(
     private readonly uri: string | null,
@@ -33,6 +33,15 @@ export class Febpop {
       socket.connect()
     }
     return this.socket
+  }
+
+  connect = () => {
+    const socket = this.delegate
+
+    return () => {
+      socket.disconnect()
+      this.socket = null
+    }
   }
 
   on = (event: string) => (action: (argument: any) => void) => {
