@@ -1,4 +1,4 @@
-import { FebpopOptions } from 'index'
+import { CompletionHandler, FebpopOptions } from 'index'
 import { connect as io } from 'socket.io-client'
 
 type Socket = SocketIOClient.Socket
@@ -11,8 +11,8 @@ const defaultOptions = {
 export interface Febpop {
   on(event: string): (action: (argument: any) => void) => void
 
-  emit(event: string, timeout?: number): (argument: any, onTimeOut: () => void) => void
-  emit(event: string, timeout: null): (argument: any) => void
+  emit(event: string, timeout?: number): (argument: any, onTimeOut: () => void) => CompletionHandler
+  emit(event: string, timeout: null): (argument: any) => CompletionHandler
 }
 
 /** @internal */
@@ -93,6 +93,10 @@ export class SocketFebpop implements ConnectableFebpop {
     }
     if (socket.connected) {
       emission()
+    }
+
+    return (onComplete: (success: boolean) => void) => {
+      callbacks.push(onComplete)
     }
   }
 }

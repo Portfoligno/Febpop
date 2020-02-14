@@ -1,7 +1,9 @@
+import { CompletionHandler } from 'CompletionHandler'
 import { ConnectableFebpop, Febpop, SocketFebpop } from 'Febpop'
 import { FebpopFactory } from 'FebpopFactory'
 import { ConnectableFebpopOptions, FebpopOptions } from 'FebpopOptions'
 
+export { CompletionHandler } from 'CompletionHandler'
 export { ConnectableFebpop, Febpop } from 'Febpop'
 export { ConnectableFebpopOptions, FebpopOptions } from 'FebpopOptions'
 
