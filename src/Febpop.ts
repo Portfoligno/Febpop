@@ -1,6 +1,6 @@
+import { FebpopOptions } from 'index'
 import { connect as io } from 'socket.io-client'
 
-type ConnectOpts = SocketIOClient.ConnectOpts
 type Socket = SocketIOClient.Socket
 
 const defaultOptions = {
@@ -13,8 +13,11 @@ export class Febpop {
 
   constructor(
     private readonly uri: string | null,
-    private readonly options?: ConnectOpts
+    private readonly options?: FebpopOptions
   ) {
+    if (options?.autoConnect ?? true) {
+      this.delegate
+    }
   }
 
   private get delegate() {

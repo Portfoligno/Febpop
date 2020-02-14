@@ -1,10 +1,8 @@
-import { Febpop } from 'index'
-
-type ConnectOpts = SocketIOClient.ConnectOpts
+import { Febpop, FebpopOptions } from 'index'
 
 /** @internal */
 export interface FebpopFactory {
-  (uri: string, options?: ConnectOpts): Febpop
+  (uri: string, options?: FebpopOptions): Febpop
 
-  (options?: ConnectOpts): Febpop
+  (options?: FebpopOptions): Febpop
 }
