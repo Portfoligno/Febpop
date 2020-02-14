@@ -8,7 +8,21 @@ const defaultOptions = {
 }
 
 /** @internal */
-export class Febpop {
+export interface Febpop {
+  on(event: string): (action: (argument: any) => void) => void
+
+  emit(event: string, timeout?: number): (argument: any, onTimeOut: () => void) => void
+  emit(event: string, timeout: null): (argument: any) => void
+}
+
+/** @internal */
+export interface ConnectableFebpop extends Febpop {
+  connect(): () => void
+}
+
+
+/** @internal */
+export class SocketFebpop implements ConnectableFebpop {
   private readonly pendingListeners = new Array<(socket: Socket) => void>()
   private readonly emissionBuffer = new Set<() => void>()
   private socket: Socket | null = null
