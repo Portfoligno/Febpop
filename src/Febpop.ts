@@ -9,10 +9,10 @@ const defaultOptions = {
 
 /** @internal */
 export interface Febpop {
-  on(event: string): (action: (argument: any) => void) => void
+  on<T>(event: string): (action: (argument: T) => void) => void
 
-  emit(event: string, timeout?: number): (argument: any, onTimeOut: () => void) => CompletionHandler
-  emit(event: string, timeout: null): (argument: any) => CompletionHandler
+  emit<T>(event: string, timeout?: number): (argument: T, onTimeOut: () => void) => CompletionHandler
+  emit<T>(event: string, timeout: null): (argument: T) => CompletionHandler
 }
 
 /** @internal */
