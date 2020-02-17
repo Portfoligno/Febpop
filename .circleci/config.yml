@@ -1,0 +1,45 @@
+version: 2.1
+
+commands:
+  ci:
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-7CPpAT-{{ checksum "package-lock.json" }}
+      - run: |
+          npm ci
+      - save_cache:
+          paths: /usr/lib/node_modules
+          key: npm-7CPpAT-{{ checksum "package-lock.json" }}
+
+jobs:
+  test:
+    docker:
+      - image: justincasetech/node:12.15.0-npm
+    steps:
+      - ci
+      - run: |
+          npm test
+  publish:
+    docker:
+      - image: justincasetech/node:12.15.0-npm
+    steps:
+      - run: |
+          apk add --no-cache git openssh-client
+      - ci
+      - run: |
+          test "$(node -p 'require("./package.json").version')" = "$CIRCLE_TAG"
+          npm test
+          echo //registry.npmjs.org/:_authToken="$NPM_TOKEN" >> .npmrc
+          npm publish
+
+
+workflows:
+  version: 2
+
+  unspecific:
+    jobs:
+      - test
+      - publish:
+          context: npm-publish
+          filters: { branches: { only: /x^/ }, tags: { only: /.*/ } }
