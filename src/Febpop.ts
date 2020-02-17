@@ -25,28 +25,31 @@ export interface ConnectableFebpop extends Febpop {
 export class SocketFebpop implements ConnectableFebpop {
   private readonly pendingListeners = new Array<(socket: Socket) => void>()
   private readonly emissionBuffer = new Set<() => void>()
-  private socket: Socket | null = null
+  private readonly properties: { socket: Socket | null } = { socket: null }
 
   constructor(
     private readonly uri: string | null,
     private readonly options?: FebpopOptions
   ) {
+    Object.freeze(options)
+    Object.freeze(this)
+
     if (options?.autoConnect ?? true) {
       this.delegate
     }
   }
 
   private get delegate() {
-    if (!this.socket) {
+    if (!this.properties.socket) {
       const options = !this.options ? defaultOptions : { ...defaultOptions, ...this.options }
       const socket = this.uri === null ? io(options) : io(this.uri, options)
-      this.socket = socket
+      this.properties.socket = socket
 
       this.pendingListeners.forEach(f => f(socket))
       socket.on('connect', () => this.emissionBuffer.forEach(f => f()))
       socket.connect()
     }
-    return this.socket
+    return this.properties.socket
   }
 
   connect = () => {
@@ -54,12 +57,12 @@ export class SocketFebpop implements ConnectableFebpop {
 
     return () => {
       socket.disconnect()
-      this.socket = null
+      this.properties.socket = null
     }
   }
 
   on = (event: string) => (action: (argument: any) => void) => {
-    if (!this.socket) {
+    if (!this.properties.socket) {
       this.pendingListeners.push(delegate => delegate.on(event, action))
     } else {
       this.delegate.on(event, action)

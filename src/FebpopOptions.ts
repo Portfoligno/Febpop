@@ -2,9 +2,9 @@
 type ConnectOpts = SocketIOClient.ConnectOpts
 
 /** @internal */
-export type FebpopOptions = ConnectOpts
+export type FebpopOptions = Readonly<ConnectOpts>
 
 /** @internal */
-export type ConnectableFebpopOptions = ConnectOpts & {
+export type ConnectableFebpopOptions = FebpopOptions & {
   autoConnect: false
 }

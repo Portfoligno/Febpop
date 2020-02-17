@@ -5,7 +5,7 @@ import { listen } from 'socket.io'
 import { connect } from 'socket.io-client'
 
 const isConnected: (febpop: Febpop) => boolean =
-    febpop => (febpop as any).socket?.connected ?? false // Peek at internal properties
+    febpop => (febpop as any).properties.socket?.connected ?? false // Peek at internal properties
 
 
 describe('`autoConnect` option', () => {
