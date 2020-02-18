@@ -1,4 +1,5 @@
-import { ConnectableFebpop, ConnectableFebpopOptions, Febpop, FebpopOptions } from 'index'
+import { ConnectableFebpop, Febpop } from './Febpop'
+import { ConnectableFebpopOptions, FebpopOptions } from './FebpopOptions'
 
 /** @internal */
 export interface FebpopFactory {

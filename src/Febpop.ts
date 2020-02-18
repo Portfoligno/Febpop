@@ -1,5 +1,6 @@
-import { CompletionHandler, FebpopOptions } from 'index'
 import { connect as io } from 'socket.io-client'
+import { CompletionHandler } from './CompletionHandler'
+import { FebpopOptions } from './FebpopOptions'
 
 type Socket = SocketIOClient.Socket
 
