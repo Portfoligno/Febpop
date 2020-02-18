@@ -5,12 +5,12 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: npm-7CPpAT-{{ checksum "package-lock.json" }}
+          key: npm-DuXU4B-{{ checksum "package-lock.json" }}
       - run: |
           npm ci --no-optional
       - save_cache:
           paths: ~/.npm
-          key: npm-7CPpAT-{{ checksum "package-lock.json" }}
+          key: npm-DuXU4B-{{ checksum "package-lock.json" }}
 
 jobs:
   test:
