@@ -1,6 +1,9 @@
 [![Build Status](https://circleci.com/gh/justincase-jp/Febpop/tree/master.svg?style=shield)](
   https://circleci.com/gh/justincase-jp/Febpop
 )
+[![npm version](https://badge.fury.io/js/febpop.svg)](
+  https://badge.fury.io/js/febpop
+)
 
 Febpop
 ===
