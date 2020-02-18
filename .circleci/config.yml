@@ -7,7 +7,7 @@ commands:
       - restore_cache:
           key: npm-7CPpAT-{{ checksum "package-lock.json" }}
       - run: |
-          npm ci
+          npm ci --no-optional
       - save_cache:
           paths: ~/.npm
           key: npm-7CPpAT-{{ checksum "package-lock.json" }}
