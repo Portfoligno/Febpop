@@ -9,7 +9,7 @@ commands:
       - run: |
           npm ci
       - save_cache:
-          paths: /usr/lib/node_modules
+          paths: ~/.npm
           key: npm-7CPpAT-{{ checksum "package-lock.json" }}
 
 jobs:
