@@ -48,5 +48,18 @@
     "typescript": "^3.7.5"
   },
   "author": "Nicholas Yip <nicholasyip@obceit.cc>",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justincase-jp/Febpop.git"
+  },
+  "keywords": [
+    "Socket.IO",
+    "TypeScript",
+    "ack",
+    "timeout",
+    "retry",
+    "transaction",
+    "at-least-once delivery"
+  ]
 }
