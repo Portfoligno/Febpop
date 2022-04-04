@@ -1,7 +1,7 @@
 import febpop, { Febpop } from 'febpop'
 import { createServer } from 'http'
 import { AddressInfo } from 'net'
-import { listen } from 'socket.io'
+import { Server } from 'socket.io'
 import { connect } from 'socket.io-client'
 
 const isConnected: (febpop: Febpop) => boolean =
@@ -11,7 +11,7 @@ const isConnected: (febpop: Febpop) => boolean =
 describe('`autoConnect` option', () => {
   // Set up a shared server instance
   const httpServer = createServer()
-  const server = listen(httpServer)
+  const server = new Server().listen(httpServer)
   const uri = `http://localhost:${(httpServer.listen(0).address() as AddressInfo).port}`
   afterAll(() => server.close())
 

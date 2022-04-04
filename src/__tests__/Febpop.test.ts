@@ -1,7 +1,7 @@
 import febpop from 'febpop'
 import { createServer } from 'http'
 import { AddressInfo } from 'net'
-import { listen, Server } from 'socket.io'
+import { Server } from 'socket.io'
 
 // Test helpers
 const event = 'test-event'
@@ -26,7 +26,7 @@ const acknowledge = (server: Server, event: string) => server.on(
 
 const setUpServer: (port?: number) => [Server, string, number] = (port = 0) => {
   const httpServer = createServer()
-  const server = listen(httpServer)
+  const server = new Server().listen(httpServer)
   const actualPort = (httpServer.listen(port).address() as AddressInfo).port
 
   return [server, `http://localhost:${actualPort}`, actualPort]

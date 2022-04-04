@@ -1,8 +1,6 @@
-import { connect as io } from 'socket.io-client'
+import { connect as io, Socket } from 'socket.io-client'
 import { CompletionHandler } from './CompletionHandler'
 import { FebpopOptions } from './FebpopOptions'
-
-type Socket = SocketIOClient.Socket
 
 const defaultOptions = {
   transports: ['websocket', 'polling']
