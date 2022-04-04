@@ -1,5 +1,6 @@
 import febpop, { Febpop } from 'febpop'
 import { createServer } from 'http'
+import { afterAll, describe, expect, it } from '@jest/globals'
 import { AddressInfo } from 'net'
 import { Server } from 'socket.io'
 import { connect } from 'socket.io-client'

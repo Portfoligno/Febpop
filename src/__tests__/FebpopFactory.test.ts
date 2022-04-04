@@ -1,4 +1,5 @@
 import febpop from 'febpop'
+import { describe, it } from '@jest/globals'
 
 describe('`febpop` factory', () => {
   it('should work without arguments', () => {
