@@ -3,6 +3,8 @@ version: 2.1
 commands:
   ci:
     steps:
+      - run: |
+          apk add --no-cache git openssh-client
       - checkout
       - restore_cache:
           key: npm-DuXU4B-{{ checksum "package-lock.json" }}
@@ -15,22 +17,21 @@ commands:
 jobs:
   test:
     docker:
-      - image: justincasetech/node:12.15.0-npm
+      - image: node:17.8.0-alpine@sha256:951521e0d02d0af67892d1943c407edb1ca30fe7b9b894e3fc7a92b21a2313f0
     steps:
       - ci
       - run: |
           npm test
   publish:
     docker:
-      - image: justincasetech/node:12.15.0-npm
+      - image: node:17.8.0-alpine@sha256:951521e0d02d0af67892d1943c407edb1ca30fe7b9b894e3fc7a92b21a2313f0
     steps:
-      - run: |
-          apk add --no-cache git openssh-client
       - ci
       - run: |
-          test "$(node -p 'require("./package.json").version')" = "$CIRCLE_TAG"
+          [ "$(node -p 'require("./package.json").version')" = "$CIRCLE_TAG" ]
+          [ "$(node -p 'require("./package-lock.json").version')" = "$CIRCLE_TAG" ]
           npm test
-          echo //registry.npmjs.org/:_authToken="$NPM_TOKEN" >> .npmrc
+          echo //registry.npmjs.org/:_authToken="$NPM_TOKEN" >>.npmrc
           npm publish
 
 
